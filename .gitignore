@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+
+# 项目不提交文件
+config
+config.js
+plugins/send_image/index.js

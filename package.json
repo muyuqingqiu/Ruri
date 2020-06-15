@@ -1,0 +1,17 @@
+{
+  "name": "coolqbot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/muyuqingqiu/coolqbot.git",
+  "license": "MIT",
+  "devDependencies": {
+    "koishi": "^1.12.0"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "js-base64": "^2.5.2",
+    "koishi-database-mysql": "^1.2.0",
+    "mongoose": "^5.9.18",
+    "mysql": "^2.18.1"
+  }
+}
