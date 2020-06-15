@@ -54,7 +54,7 @@ module.exports.apply = async (ctx) => {
             }
             let {
                 data: result
-            } = await axios.get('http://localhost:3333/api/get_image?random=1&setu=1');
+            } = await axios.get('http://localhost:3333/api/get_image?random=1&setu=1');//这里就是获取一个图片名称（iid），可以自行修改一下。
             let {
                 data: iid
             } = result;
@@ -62,7 +62,7 @@ module.exports.apply = async (ctx) => {
             let file = await fsPromise.readFile(imagePath)
             let base64Str = Base64.encode(file);
             ctx.sender.sendGroupMsg(groupId, `[CQ:image,file=base64://${base64Str}]`).then((msgId) => {
-                meta.$send(``);
+                meta.$send(``);//可自行配置发送后补充的话
             });
         }
         return next();

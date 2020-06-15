@@ -29,7 +29,7 @@ global.reqedUsers = {};
 global.timerManager = new TimerManager();
 global.messageLimit = new MessageLimit();
 let {
-    database
+    database: mysql
 } = require(path.join(__dirname, './../config/start.config'));
 let {
     plugins: PLUGINS,
@@ -50,8 +50,12 @@ module.exports = function (app) {
     app.group(...RES_GROUPS).prependMiddleware(async (meta, next) => {
         let userInfoField = meta.sender;
         if (!reqedGroups[meta.groupId] && meta.groupId) {
-            let groupInfo = await app.database.getGroup(meta.groupId, SELF_ID);
-            let groupPluginData = await groupModel.findOne({
+            let groupInfo = {},
+                groupPluginData
+            if (mysql) {
+                groupInfo = await app.database.getGroup(meta.groupId, SELF_ID);
+            }
+            groupPluginData = await groupModel.findOne({
                 group_id: meta.groupId
             })
             groupPluginData = groupPluginData ? groupPluginData : {
@@ -61,7 +65,9 @@ module.exports = function (app) {
                 ...groupInfo,
                 disabled_plugins: disabledPlugins
             }
-            await app.database.setGroup(meta.groupId, groupInfo);
+            if (mysql) {
+                await app.database.setGroup(meta.groupId, groupInfo);
+            }
             groupInfo = {
                 ...groupInfo,
                 ...groupPluginData._doc
@@ -69,8 +75,13 @@ module.exports = function (app) {
             reqedGroups[meta.groupId] = groupInfo;
         }
         if (!reqedUsers[meta.userId]) {
-            let userInfo = await app.database.getUser(meta.userId, 1);
-            let userPluginData = await userModel.findOne({
+            let userInfo = {},
+                userPluginData;
+            if (mysql) {
+                userInfo = await app.database.getUser(meta.userId, 1);
+
+            }
+            userPluginData = await userModel.findOne({
                 user_id: meta.userId
             })
             userPluginData = userPluginData ? userPluginData : {
@@ -92,8 +103,9 @@ module.exports = function (app) {
                 info: userInfoField,
                 disabled_plugins: disabledPlugins
             }
-            await app.database.setUser(meta.userId, userInfo);
-
+            if(mysql){
+                await app.database.setUser(meta.userId, userInfo);
+            }
             userInfo = {
                 ...userInfo,
                 ...userPluginData._doc,

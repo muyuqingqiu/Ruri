@@ -6,5 +6,5 @@ module.exports = {
         }).flat()
         return voiceList;
     })(),
-    pekovoicePath:'/'
+    pekovoicePath:'/' //语音路径
 }

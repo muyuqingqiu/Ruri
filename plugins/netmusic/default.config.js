@@ -1,4 +1,4 @@
 module.exports = {
-    phone: '',
-    password: ''
+    phone: '',//网易云手机号
+    password: ''//密码
 }
