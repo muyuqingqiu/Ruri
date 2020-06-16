@@ -1,6 +1,5 @@
 const path = require('path');
 let userModel = require(path.join(__dirname, '../../model/user.js'))
-const PLUGINNAME = 'netmusic';
 const {
     message: MSG_CONF,
     nick: BOTNICK,
@@ -14,6 +13,7 @@ const {
     user_cloud
 } = require(path.join(__dirname, '../../tools/NeteaseCloudMusicApi'));
 const {
+    getModuleName,
     checkAdmin,
     atMessage,
     timerManager,
@@ -21,6 +21,7 @@ const {
     reqedUsers
 } = require(path.join(__dirname, './../../config/util.config'));
 
+const PLUGINNAME = getModuleName(__dirname);
 
 let {
     msg_prefix,
